@@ -16,8 +16,6 @@ def new_comments():
             EC.presence_of_element_located((By.XPATH,
                                             "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[1]/div/div/section/div/div/div/div[2]/button"))
         )
-
-
     finally:
         h1 = driver.find_element_by_xpath(
             "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[1]/div/div/section/div/div/div/div[2]/button")
@@ -30,29 +28,34 @@ def get_replies():
     for items in list_elements:
         items.click()
 
-def get_comments():
+def get_comments(limit=0):
     list_elements = driver.find_elements(By.XPATH, ("//div[contains(@class, 'C($c-fuji-grey-l)')]"));
+    if limit > 0:
+        list_elements= list_elements[:limit]
     for items in list_elements:
         print(items.text)
 
-
-try:
-    element = WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.XPATH,
-            "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[1]/div/div/section/div/div/div/div[2]/ul/li[2]/button"))
+#checks if comments are available
+def check_comments():
+    try:
+        element = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.XPATH,
+                                            "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[1]/div/div/section/div/div/div/div[2]/ul/li[2]/button"))
         )
 
-finally:
-       h2 = driver.find_element_by_xpath(
+    finally:
+        h2 = driver.find_element_by_xpath(
             "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[1]/div/div/section/div/div/div/div[2]/ul/li[2]/button")
+        h2.click()
 
 
-h2.click()
+new_comments()
+
+check_comments()
+
 time.sleep(1)
 
 get_replies()
-
-
 
 get_comments()
 
