@@ -9,6 +9,20 @@ driver = webdriver.Chrome(executable_path=DRIVER_PATH)
 driver.get('https://finance.yahoo.com/quote/AAPL/community?p=AAPL')
 h2 = 'o'
 
+# Goes to new comments in Yahoo Finance
+def new_comments():
+    try:
+        element = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.XPATH,
+                                            "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[1]/div/div/section/div/div/div/div[2]/button"))
+        )
+
+
+    finally:
+        h1 = driver.find_element_by_xpath(
+            "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[1]/div/div/section/div/div/div/div[2]/button")
+        h1.click()
+
 
 def get_replies():
     list_elements = driver.find_elements(By.XPATH, ("//button[contains(@class, 'replies-button')]"));
@@ -21,15 +35,7 @@ def get_comments():
     for items in list_elements:
         print(items.text)
 
-try:
-    element = WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[1]/div/div/section/div/div/div/div[2]/button"))
-    )
 
-
-finally:
-    h1 = driver.find_element_by_xpath("/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[1]/div/div/section/div/div/div/div[2]/button")
-    h1.click()
 try:
     element = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.XPATH,
