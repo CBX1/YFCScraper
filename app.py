@@ -9,7 +9,7 @@ app = Flask(__name__)
 # on the terminal type: curl http://127.0.0.1:5000/
 # returns hello world when we use GET.
 # returns the data that we send when we use POST.
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def home():
     if (request.method == 'GET'):
         data = "hello world"
@@ -20,10 +20,6 @@ def home():
 # the number to be squared is sent in the URL when we use GET
 # on the terminal type: curl http://127.0.0.1:5000 / home / 10
 # this returns 100 (square of 10)
-@app.route('/home/<int:num>', methods=['GET'])
-def disp(num):
-    return jsonify({'data': num ** 2})
-
 
 
 
@@ -66,11 +62,10 @@ def disfpl(stock_name,disc_type,show):
 
 
 
-@app.route('/<string:stock_name>/<string:disc_type>/replies/lim/<int:limit>', methods=['GET'])
+@app.route('/<string:stock_name>/<string:disc_type>/lim/<int:limit>', methods=['GET'])
 def displell(stock_name,disc_type,limit):
     driver = initialize(stock_name)
     new_comments(driver,disc_type)
-    get_replies(driver)
     a = get_comments(driver,limit)
     return jsonify({'data': a})
 

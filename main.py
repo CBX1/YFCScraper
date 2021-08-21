@@ -3,16 +3,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+import chromedriver_binary
 import time
 
 
 
 def initialize(string):
     string = string.capitalize()
-    DRIVER_PATH = 'C:/Users/seema/Downloads/chromedriver'
-    options = webdriver.ChromeOptions()
-    options.add_argument('headless')
-    driver = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(chrome_options=chrome_options)
     driver.get('https://finance.yahoo.com/quote/' + string + '/community?p=' + string)
     return driver
 
@@ -63,9 +64,10 @@ def new_comments(driver,type):
             "/html/body/div[1]/div/div/div[1]/div/div[3]/div[1]/div/div[1]/div/div/section/div/div/div/div[2]/button")
         h1.click()
     string = string_comment(type)
+    time.sleep(2)
 
     try:
-        WebDriverWait(driver, 40).until(
+        WebDriverWait(driver, 80).until(
             EC.presence_of_element_located((By.XPATH,
                 string))
             )
@@ -94,6 +96,7 @@ def get_comments(driver,limit=0):
         list_elements= list_elements[:limit]
     for items in list_elements:
             list_comments.append(items.text)
+    driver.quit()
     return list_comments
 
 #checks if comments are available
