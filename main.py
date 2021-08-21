@@ -10,8 +10,8 @@ import time
 def initialize(string):
     string = string.capitalize()
     DRIVER_PATH = 'C:/Users/seema/Downloads/chromedriver'
-    options = webdriver.ChromeOptions();
-    # options.add_argument('headless');
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
     driver = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
     driver.get('https://finance.yahoo.com/quote/' + string + '/community?p=' + string)
     return driver
