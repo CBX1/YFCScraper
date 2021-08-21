@@ -12,14 +12,8 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def home():
     if (request.method == 'GET'):
-        data = "hello world"
+        data = "You've wandered to an interesting part of the internet"
         return jsonify({'data': data})
-
-
-# A simple function to calculate the square of a number
-# the number to be squared is sent in the URL when we use GET
-# on the terminal type: curl http://127.0.0.1:5000 / home / 10
-# this returns 100 (square of 10)
 
 
 
@@ -101,4 +95,4 @@ def disfeeepl(stock_name,disc_type,show,limit):
 
 # driver function
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
