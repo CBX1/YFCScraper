@@ -4,7 +4,7 @@ from flask import Flask, jsonify, request
 from main import *
 # creating a Flask app
 app = Flask(__name__)
-
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 # on the terminal type: curl http://127.0.0.1:5000/
 # returns hello world when we use GET.
@@ -23,7 +23,6 @@ def displll(stock_name,disc_type):
     new_comments(driver,disc_type)
     a = get_comments(driver)
     return jsonify({'data': a})
-
 
 @app.route('/<string:stock_name>/<string:disc_type>/replies', methods=['GET'])
 def dispel(stock_name,disc_type):
@@ -82,7 +81,7 @@ def diseespl(stock_name,disc_type,show,limit):
     return jsonify({'data': a})
 
 
-@app.route('/<string:stock_name>/<string:disc_type>/show/<int:show>/replies/<int:limit>', methods=['GET'])
+@app.route('/<string:stock_name>/<string:disc_type>/show/<int:show>/replies/lim/<int:limit>', methods=['GET'])
 def disfeeepl(stock_name,disc_type,show,limit):
     driver = initialize(stock_name)
     new_comments(driver,disc_type)
